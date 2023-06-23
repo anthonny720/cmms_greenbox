@@ -12,7 +12,7 @@ const Header = () => {
                         className=' text-xs font-light'>+51 982 704 759</span>
                     <span className="h-6 w-px bg-white dark:bg-dark-third mx-2" aria-hidden="true"/>
                     <span
-                        className=' text-xs font-normal'>anthonny720g@gmail.com</span>
+                        className=' text-xs font-normal'>data_analyst@greenbox.pe</span>
                 </div>
             </form>
 

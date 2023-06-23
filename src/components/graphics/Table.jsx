@@ -10,8 +10,8 @@ const Table = () => {
         <tr className={"w-max  bg-opacity-10 bg-blue-400  rounded-l-md "}>
             <th className={"w-max text-xs font-bold text-center text-[#4687f1] whitespace-nowrap "}>Personal</th>
             {total_days !== null && size(total_days) > 0 && map(total_days[0].data, (column, index) => (<th key={index}
-                                                                                                            className={"px-6 whitespace-nowrap  font-medium text-center text-[#4687f1]"}>
-                {new Date(column?.label).toLocaleDateString('es-PE', {timeZone: 'UTC'})}
+                                                                                                                className={"px-6 whitespace-nowrap  font-medium text-center text-[#4687f1]"}>
+                {column?.label}
             </th>))}
         </tr>
         </thead>
