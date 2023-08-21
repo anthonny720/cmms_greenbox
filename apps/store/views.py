@@ -10,8 +10,7 @@ from rest_framework.views import APIView
 
 from apps.store.models import Article, Requirements
 from apps.store.serializers import StoreSerializer, RequirementsSerializer
-from apps.util.permissions import BossEditorPermission, PlannerEditorPermission, TechnicalEditorPermission, \
-    OperatorEditorPermission, ShoppingEditorPermission
+from apps.util.permissions import BossEditorPermission, PlannerEditorPermission, TechnicalEditorPermission, OperatorEditorPermission, ShoppingEditorPermission
 
 
 # Create your views here.
@@ -34,13 +33,26 @@ class SyncStoreView(APIView):
 
             # Recorrer el DataFrame y agregar cada registro a la base de datos
             for _, row in df.iterrows():
+                costo_unitario = row['COSTO UNITARIO']
+                if costo_unitario == '':
+                    costo_unitario = 0
+                else:
+                    try:
+                        costo_unitario = float(costo_unitario)
+                    except ValueError:
+                        costo_unitario = 0  # Si la conversión falla, establecer en cero
+                stock_value = row['STOCK ']
+                if stock_value == '':
+                    stock_value = 0
+                else:
+                    stock_value = int(round(float(stock_value)))  # Redondear y convertir a entero
                 obj = Article(
                     group=row['GRUPO'],
                     code_sap=row['CODIGO'],
                     description=row['DESCRIPCION'],
-                    unit_measurement=row['U. MED'],
-                    value=row['COSTO UNITARIO'],
-                    stock=row['STOCK '],
+                    unit_measurement=row['UND'],
+                    value=costo_unitario,
+                    stock=stock_value,
                 )
                 obj.save()
 
@@ -94,8 +106,8 @@ class AddRequirementsView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message': 'Requirements added'}, status=status.HTTP_201_CREATED)
-        except:
-            return Response({'error': 'Error adding requirements'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @permission_classes([
@@ -108,8 +120,8 @@ class UpdateRequirementsView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message': 'Requirements updated'}, status=status.HTTP_200_OK)
-        except:
-            return Response({'error': 'Error updating requirements'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @permission_classes(
@@ -120,5 +132,5 @@ class DeleteRequirementsView(APIView):
             queryset = Requirements.objects.get(id=id)
             queryset.delete()
             return Response({'message': 'Requirements deleted'}, status=status.HTTP_200_OK)
-        except:
-            return Response({'error': 'Error deleting requirements'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

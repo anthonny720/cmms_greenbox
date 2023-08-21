@@ -49,7 +49,7 @@ class AddFixedView(APIView):
                 return Response({'message': 'Fixed asset added'}, status=status.HTTP_201_CREATED)
             return Response({'error': 'Fixed asset not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
-            return Response({'error': 'Fixed asset not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -63,7 +63,7 @@ class UpdateFixedView(APIView):
                 return Response({'message': 'Fixed asset updated'}, status=status.HTTP_200_OK)
             return Response({'error': 'Fixed asset not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
-            return Response({'error': 'Fixed asset not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -74,7 +74,7 @@ class DeleteFixedView(APIView):
             fixed.delete()
             return Response({'message': 'Fixed asset deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Fixed asset not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -101,7 +101,7 @@ class AddToolView(APIView):
                 return Response({'message': 'Tool added'}, status=status.HTTP_201_CREATED)
             return Response({'error': 'Tool not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
-            return Response({'error': 'Tool not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -112,7 +112,7 @@ class UpdateToolView(APIView):
             tool.delete()
             return Response({'message': 'Tool deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Tool not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def patch(self, request, pk):
         try:
@@ -123,7 +123,7 @@ class UpdateToolView(APIView):
                 return Response({'message': 'Tool updated'}, status=status.HTTP_200_OK)
             return Response({'error': 'Tool not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
-            return Response({'error': 'Tool not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -134,7 +134,7 @@ class DeleteToolView(APIView):
             tool.delete()
             return Response({'message': 'Tool deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Tool not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ListPhysicalView(APIView):
@@ -162,7 +162,7 @@ class AddPhysicalView(APIView):
             return Response({'error': 'Physical asset not added', 'detail': str(serializer.errors)},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
-            return Response({'error': 'Physical asset not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -173,7 +173,7 @@ class DeletePhysicalView(APIView):
             physical.delete()
             return Response({'message': 'Physical asset deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Physical asset not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -184,7 +184,7 @@ class UpdatePhysicalView(APIView):
             serializer = PhysicalSerializer(physical)
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Physical asset not found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def patch(self, request, pk):
         try:
@@ -212,7 +212,7 @@ class AddFilePhysicalView(APIView):
             physical.save()
             return Response({'message': 'File added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'File not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ListFilesView(APIView):
@@ -238,7 +238,7 @@ class AddFileView(APIView):
                 return Response({'message': 'File added'}, status=status.HTTP_201_CREATED)
             return Response({'error': 'File not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
-            return Response({'error': 'File not added', 'detail': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -249,4 +249,4 @@ class DeleteFileView(APIView):
             file.delete()
             return Response({'message': 'File deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'File not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

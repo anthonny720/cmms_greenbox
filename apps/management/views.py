@@ -74,7 +74,7 @@ class AddWorkOrderView(APIView):
             serializer.save()
             return Response({'message': 'Work order added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Work order not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @permission_classes(
@@ -88,15 +88,15 @@ class UpdateWorkOrderView(APIView):
             if request.user.role != "P" and request.user.role != "B" and request.user not in queryset.technical.all():
                 return Response({'error': 'No tiene permisos para realizar esta acción'},
                                 status=status.HTTP_401_UNAUTHORIZED)
-            if (timezone.now() - queryset.date_start).total_seconds() > 24 * 60 * 60:
-                return Response({'error': 'No se puede modificar una orden de trabajo pasadas 24 horas de su inicio'},
-                                status=status.HTTP_401_UNAUTHORIZED)
+            # if (timezone.now() - queryset.date_start).total_seconds() > 24 * 60 * 60:
+            #     return Response({'error': 'No se puede modificar una orden de trabajo pasadas 24 horas de su inicio'},
+            #                     status=status.HTTP_401_UNAUTHORIZED)
             serializer = WorkOrderSerializer(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message': 'Work order updated'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Work order not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([SupervisorEditorPermission])
@@ -111,7 +111,7 @@ class UpdateWorkSupervisorView(APIView):
             serializer = WorkOrderSerializer(queryset, many=False)
             return Response({'message': 'Work order updated'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Work order not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes(
@@ -124,7 +124,7 @@ class DeleteWorkOrderView(APIView):
             queryset.delete()
             return Response({'data': 'Work order deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Work order not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ListWorkRequestView(APIView):
@@ -148,8 +148,7 @@ class AddWorkRequestView(APIView):
             serializer.save()
             return Response({'message': 'Work request added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Work request not added', 'detail': str(e)},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission])
@@ -164,7 +163,7 @@ class GenerateOTView(APIView):
             request.save()
             return Response({'message': 'Work order added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Work order not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([TechnicalEditorPermission | OperatorEditorPermission])
@@ -190,7 +189,7 @@ class AddResourcesOTView(APIView):
                 ResourceItem.objects.create(work_order=order, article=article, quantity=1)
             return Response({'message': 'Resource added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Resource not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([TechnicalEditorPermission | OperatorEditorPermission])
@@ -208,7 +207,7 @@ class DeleteResourceOTView(APIView):
             queryset.delete()
             return Response({'message': 'Resource deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Resource not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([TechnicalEditorPermission | OperatorEditorPermission])
@@ -229,8 +228,7 @@ class AddHelpersOTView(APIView):
             HelperItem.objects.create(work_order=order, helper=helper, date_start=date_start, date_finish=date_finish)
             return Response({'message': 'Helper added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Helper not added', 'detail': str(e)},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([TechnicalEditorPermission | OperatorEditorPermission])
@@ -248,4 +246,4 @@ class DeleteHelperOTView(APIView):
             queryset.delete()
             return Response({'message': 'Helper deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Helper not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

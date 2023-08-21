@@ -42,7 +42,7 @@ class AddFailureView(APIView):
             serializer.save()
             return Response({'message': 'Failure added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Failure  not  added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -54,7 +54,7 @@ class AddTypeView(APIView):
             serializer.save()
             return Response({'message': 'Type added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Type not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -67,7 +67,7 @@ class UpdateFailureView(APIView):
             serializer.save()
             return Response({'message': 'Failure updated'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Failure not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -80,7 +80,7 @@ class UpdateTypeView(APIView):
             serializer.save()
             return Response({'message': 'Type updated'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Type not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -91,7 +91,7 @@ class DeleteFailureView(APIView):
             failure.delete()
             return Response({'message': 'Failure deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Failure not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -102,7 +102,7 @@ class DeleteTypeView(APIView):
             type.delete()
             return Response({'message': 'Type deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Type not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ListCategoryView(APIView):
@@ -124,7 +124,7 @@ class AddCategoryView(APIView):
             serializer.save()
             return Response({'message': 'Category added'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Category not added'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
@@ -137,8 +137,7 @@ class UpdateCategoryView(APIView):
             serializer.save()
             return Response({'message': 'Category updated'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Category not updated'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
 class DeleteCategoryView(APIView):
@@ -148,4 +147,4 @@ class DeleteCategoryView(APIView):
             category.delete()
             return Response({'message': 'Category deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Category not deleted'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

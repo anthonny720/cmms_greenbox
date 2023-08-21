@@ -73,7 +73,7 @@ export const add_work = (form, params) => async dispatch => {
                 payload: res.data
             });
             dispatch(get_works(params))
-            dispatch(setAlert("OT registrada", 'error'));
+            dispatch(setAlert("OT registrada", 'success'));
         } else {
             dispatch({
                 type: ADD_WORK_FAIL

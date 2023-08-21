@@ -4,7 +4,7 @@ from pathlib import Path
 
 import environ
 
-SITE_NAME = 'GreenBox'
+SITE_NAME = 'Greenbox'
 
 # Environ
 env = environ.Env()
@@ -19,7 +19,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['mm.greenbox.pe', 'www.mm.greenbox.pe', 'greenbox.pe', 'www.greenbox.pe', 'localhost', ]
+ALLOWED_HOSTS = ['mm.greenbox.pe', 'mm.greenbox.pe', 'greenbox.pe', 'www.greenbox.pe', 'localhost', ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
@@ -62,8 +62,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql', 'NAME': 'greenbox_mm',
-                         'USER': 'anthonny', 'PASSWORD': 'lO0sBzg&@7Kayr0H^PeT', 'HOST': 'localhost', 'PORT': 5432, }}
+# Database
+DATABASES = {
+    "default": env.db("DATABASE_URL", default="postgres:///mm_ddbb"),
+}
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # Password validation

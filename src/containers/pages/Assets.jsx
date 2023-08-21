@@ -81,7 +81,7 @@ const Assets = () => {
             <Header/>
             <Filter/>
             {tree && tree !== null && map(tree, i => {
-                return <Disclosure as="div">
+                return<Disclosure as="div">
                     {({open}) => (<>
                         <Disclosure.Button
                             className="flex w-full mt-4 justify-start gap-2 border-b-2  items-center  bg-white px-4 py-2 text-left text-sm font-medium text-black hover:bg-blue-600 hover:bg-opacity-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
