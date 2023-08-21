@@ -62,11 +62,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# Database
-DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres:///mm_ddbb"),
-}
-
+DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql', 'NAME': 'greenbox_mm',
+                         'USER': 'anthonny', 'PASSWORD': 'lO0sBzg&@7Kayr0H^PeT', 'HOST': 'localhost', 'PORT': 5432, }}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # Password validation
