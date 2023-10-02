@@ -1,8 +1,7 @@
-import os
-from datetime import datetime
-
 import gdown as gdown
+import os
 import pandas as pd
+from datetime import datetime
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
@@ -10,7 +9,7 @@ from rest_framework.views import APIView
 
 from apps.store.models import Article, Requirements
 from apps.store.serializers import StoreSerializer, RequirementsSerializer
-from apps.util.permissions import BossEditorPermission, PlannerEditorPermission, TechnicalEditorPermission, OperatorEditorPermission, ShoppingEditorPermission
+from apps.util.permissions import PlannerEditorPermission, TechnicalEditorPermission, ShoppingEditorPermission
 
 
 # Create your views here.
@@ -19,13 +18,13 @@ class SyncStoreView(APIView):
     def get(self, request, format=None):
 
         # Descargar el archivo usando gdown
-        url = 'https://drive.google.com/uc?id=1lD8D9t1LlJsf8HSAuMSRWGR7UcnbvlQn'
+        url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQa-iUbwwcTX0pCsk88ZpoM1MbmnFViJebBFzTeNNHGbvAcgEo2AFzqqxMktKH-ew/pub?output=xlsx'
         output = 'temp_file.xlsx'
         gdown.download(url, output, quiet=False)
 
         try:
             # Leer el archivo descargado con pandas
-            df = pd.read_excel(output, dtype=str, engine='openpyxl', skiprows=2, sheet_name='STOCK GENERAL')
+            df = pd.read_excel(output, dtype=str, engine='openpyxl', skiprows=5, sheet_name='KARDEX GENERAL')
             df.fillna(0, inplace=True)
 
             # Eliminar los registros existentes en el modelo antes de agregar los nuevos
@@ -41,19 +40,13 @@ class SyncStoreView(APIView):
                         costo_unitario = float(costo_unitario)
                     except ValueError:
                         costo_unitario = 0  # Si la conversión falla, establecer en cero
-                stock_value = row['STOCK ']
+                stock_value = row['EXISTENCIA ACTUAL']
                 if stock_value == '':
                     stock_value = 0
                 else:
                     stock_value = int(round(float(stock_value)))  # Redondear y convertir a entero
-                obj = Article(
-                    group=row['GRUPO'],
-                    code_sap=row['CODIGO'],
-                    description=row['DESCRIPCION'],
-                    unit_measurement=row['UND'],
-                    value=costo_unitario,
-                    stock=stock_value,
-                )
+                obj = Article(group=row['FAMILIA'], code_sap=row['CODIGO'], description=row['DESCRIPCION'],
+                              unit_measurement=row['U.M.'], value=costo_unitario, stock=stock_value, )
                 obj.save()
 
             # Borrar el archivo temporal
@@ -85,8 +78,8 @@ class ListRequirementsView(APIView):
             date_start = request.query_params.get('date_start', None)
             date_end = request.query_params.get('date_end', None)
             if date_start and date_end:
-                queryset = queryset.filter(date__range=[datetime.strptime(date_start, "%d/%m/%Y"),
-                                                        datetime.strptime(date_end, "%d/%m/%Y")])
+                queryset = queryset.filter(
+                    date__range=[datetime.strptime(date_start, "%d/%m/%Y"), datetime.strptime(date_end, "%d/%m/%Y")])
             else:
                 queryset = queryset.filter(date__month=datetime.now().month)
             serializer = RequirementsSerializer(queryset, many=True)
@@ -95,8 +88,7 @@ class ListRequirementsView(APIView):
             return Response({'error': 'No requirements found', 'detail': str(e)}, status=status.HTTP_200_OK)
 
 
-@permission_classes(
-    [BossEditorPermission | PlannerEditorPermission | TechnicalEditorPermission | OperatorEditorPermission])
+@permission_classes([PlannerEditorPermission | TechnicalEditorPermission])
 class AddRequirementsView(APIView):
     def post(self, request):
         try:
@@ -110,8 +102,7 @@ class AddRequirementsView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@permission_classes([
-    BossEditorPermission | PlannerEditorPermission | TechnicalEditorPermission | OperatorEditorPermission | ShoppingEditorPermission])
+@permission_classes([PlannerEditorPermission | TechnicalEditorPermission | ShoppingEditorPermission])
 class UpdateRequirementsView(APIView):
     def patch(self, request, id):
         try:
@@ -124,8 +115,7 @@ class UpdateRequirementsView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@permission_classes(
-    [BossEditorPermission | PlannerEditorPermission])
+@permission_classes([PlannerEditorPermission])
 class DeleteRequirementsView(APIView):
     def delete(self, request, id):
         try:

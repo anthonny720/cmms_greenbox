@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from apps.assets.models import Fixed, Tool, Physical, Files
 from apps.assets.serializers import FixedSerializer, ToolsSerializer, PhysicalSerializer, FilesSerializer
-from apps.util.permissions import BossEditorPermission, PlannerEditorPermission, IsAdmin
+from apps.util.permissions import  PlannerEditorPermission, IsAdmin,BossEditorPermission
 
 
 # Create your views here.
@@ -39,7 +39,7 @@ class ListFixedView(APIView):
             return Response({'error': 'No  fixes assets found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class AddFixedView(APIView):
     def post(self, request):
         try:
@@ -52,7 +52,7 @@ class AddFixedView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class UpdateFixedView(APIView):
     def patch(self, request, pk):
         try:
@@ -66,7 +66,7 @@ class UpdateFixedView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class DeleteFixedView(APIView):
     def delete(self, request, pk):
         try:
@@ -77,7 +77,7 @@ class DeleteFixedView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class ListToolsView(APIView):
     def get(self, request):
         try:
@@ -91,7 +91,7 @@ class ListToolsView(APIView):
             return Response({'error': 'No  tools found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin |BossEditorPermission])
 class AddToolView(APIView):
     def post(self, request):
         try:
@@ -104,7 +104,7 @@ class AddToolView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class UpdateToolView(APIView):
     def delete(self, request, pk):
         try:
@@ -126,7 +126,7 @@ class UpdateToolView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class DeleteToolView(APIView):
     def delete(self, request, pk):
         try:
@@ -151,7 +151,7 @@ class ListPhysicalView(APIView):
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class AddPhysicalView(APIView):
     def post(self, request):
         try:
@@ -165,7 +165,7 @@ class AddPhysicalView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class DeletePhysicalView(APIView):
     def delete(self, request, pk):
         try:
@@ -176,7 +176,7 @@ class DeletePhysicalView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class UpdatePhysicalView(APIView):
     def get(self, request, pk):
         try:
@@ -200,7 +200,7 @@ class UpdatePhysicalView(APIView):
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class AddFilePhysicalView(APIView):
     def post(self, request, pk):
         try:
@@ -228,7 +228,7 @@ class ListFilesView(APIView):
             return Response({'error': 'No  files found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class AddFileView(APIView):
     def post(self, request):
         try:
@@ -241,7 +241,7 @@ class AddFileView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class DeleteFileView(APIView):
     def delete(self, request, pk):
         try:

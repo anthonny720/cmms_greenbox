@@ -24,10 +24,8 @@ const Sidebar = () => {
         name: "Almacén", link: "/inventory/warehouses", icon: faStore
     }, {name: "Órdenes de trabajo", link: "/tasks", icon: faNoteSticky, margin: true},
         {name: "Registro de OT", link: "/register", icon: faFolderOpen,}, {
-            name: "Inteligencia de negocios", link: "/graphics", icon: faBrain
+            name: "Inteligencia de negocios", link: "/", icon: faBrain
         }, {name: "Disco virtual", link: "/storage/panel", icon: faDatabase}, {
-            name: "Solicitudes", link: "/workrequest", icon: faPaperPlane, margin: true
-        }, {
             name: "Requerimientos", link: "/inventory/requirements", icon: faCommentDollar, margin: false
         }];
 
@@ -45,7 +43,7 @@ const Sidebar = () => {
             </svg>
         </div>
         <div className="mt-4 flex flex-col gap-4 relative z-100">
-            <NavLink to="/graphics">
+            <NavLink to="/">
                 <svg style={{
                     transitionDelay: `300ms`,
                 }}

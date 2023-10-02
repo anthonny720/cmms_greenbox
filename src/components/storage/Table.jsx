@@ -23,7 +23,7 @@ const Table = ({data, remove, viewer}) => {
 
             <tr key={index} className="bg-white border-y hover:bg-[#4687f1] hover:bg-opacity-10 ">
                 <td className="py-2 px-4 text-center text-xs font-light">
-                    {me?.permissions === 'EDITOR' && (me?.role === 'P' || me?.role === 'B') ? (
+                    {(me?.role === 'P' || me?.role === 'B') ? (
                         <TrashIcon onClick={() => remove(item)}
                                    className="w-5 p-0.5 text-red-400 bg-red-500 bg-opacity-10 rounded-full cursor-pointer"/>) : (
                         <button

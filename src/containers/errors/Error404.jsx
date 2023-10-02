@@ -5,7 +5,7 @@ const Error404 = () => {
     const redirect = useNavigate();
     useEffect(() => {
         setTimeout(() => {
-            redirect('/graphics');
+            redirect('/');
         }, 2000);
     }, []);
     return (<>
@@ -20,7 +20,7 @@ const Error404 = () => {
                     </p>
 
                     <NavLink
-                        to="/graphics"
+                        to="/"
                         className="duration-400 inline rounded-lg border border-transparent bg-blue-600 px-5 py-3 text-sm font-medium leading-5 text-white shadow-2xl transition-all hover:bg-blue-600 focus:outline-none active:bg-cyan-600"
                     >Regresar al inicio</NavLink
                     >

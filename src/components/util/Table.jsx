@@ -22,7 +22,7 @@ const Table = ({data, update, remove}) => {
         {data !== null && size(data) > 0 ? map(data, (item, index) => (
             <tr key={index} className="bg-white border-b hover:bg-[#4687f1] hover:bg-opacity-10">
                 <td className={'py-2 px-4 text-center text-xs font-light'}>
-                    {me?.permissions === 'EDITOR' && (me?.role === 'P' || me?.role === 'B') ? (
+                    {(me?.role === 'P' || me?.role === 'B') ? (
                         <TrashIcon onClick={() => remove(item)}
                                    className="w-5 p-0.5 text-red-400 bg-red-500 bg-opacity-10 rounded-full cursor-pointer"/>) : (
                         <button
@@ -37,7 +37,7 @@ const Table = ({data, update, remove}) => {
                         className={` w-max ${item?.is_active ? "bg-green-100 text-green-400" : "bg-red-100 text-red-400"}  rounded-lg  font-semibold text-center p-2`}>{item?.is_active ? "Si" : "No"}</p>
                 </td>
                 <td onClick={() => {
-                    me?.permissions === 'EDITOR' && (me?.role === 'P'||me?.role ==='B') ? update(item) : dispatch(setAlert("No tienes permisos para realizar esta acción", "error"))
+                    (me?.role === 'P'||me?.role ==='B') ? update(item) : dispatch(setAlert("No tienes permisos para realizar esta acción", "error"))
                 }}
 
                     className={'py-2 px-4 text-center text-xs font-light hover:text-blue-400 hover:font-bold cursor-pointer '}>
@@ -59,7 +59,7 @@ const Table = ({data, update, remove}) => {
                     {item?.dni}</td>
                 <td className={'py-2 px-4 text-center text-xs font-light'}>
 
-                    {item?.role}</td>
+                    {item?.get_role_name}</td>
 
             </tr>)) : <tr>
             {columns.map((column, index) => (<td key={index} className="py-2 px-4 text-center text-xs font-light">

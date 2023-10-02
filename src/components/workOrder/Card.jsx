@@ -33,7 +33,7 @@ const Card = ({
                                                               className={"cursor-pointer text-gray-400 bg-gray-700 bg-opacity-10 p-2 rounded-full absolute right-8 top-0"}
                                                               size={"2xs"} icon={faEye}/>}
 
-                    {me && true && true && me?.permissions === "EDITOR" && (me?.role === 'B' || me?.role === 'P') &&
+                    {me && true && true && (me?.role === 'B' || me?.role === 'P') &&
                         <FontAwesomeIcon
                             onClick={() => action_delete(item)}
                             className={"cursor-pointer text-red-400 bg-red-700 bg-opacity-10 p-2 rounded-full absolute right-0 top-0"}
@@ -66,7 +66,7 @@ const Card = ({
                 <p
                     className={"text-black text-xs flex gap-2 mt-2 hover:text-gray-600 items-center font-bold"}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         onClick={() => me?.permissions === "EDITOR" && (me?.role === 'B' || me?.role === 'P' || me?.role === 'O' || me?.role === 'T') && action_update(item?.id)}
+                         onClick={() => (me?.role === 'B' || me?.role === 'P' || me?.role === 'T') && action_update(item?.id)}
                          strokeWidth={1.5}
                          stroke="currentColor" className="w-6 h-6 cursor-pointer">
                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -76,9 +76,9 @@ const Card = ({
                     </svg>
                     {size(item?.helpers) > 0 ? map(item?.helpers, (helper, index) => <UserIcon
                         title={helper?.helper?.first_name} key={index}
-                        onClick={() => me?.permissions === "EDITOR" && (me?.role === 'B' || me?.role === 'P' || me?.role === 'O' || me?.role === 'T') && action_helpers(item?.id)}
+                        onClick={() =>(me?.role === 'B' || me?.role === 'P' ||  me?.role === 'T') && action_helpers(item?.id)}
                         className="w-4 h-4 cursor-pointer hover:text-blue-400"/>) : <UserPlusIcon
-                        onClick={() => me?.permissions === "EDITOR" && (me?.role === 'B' || me?.role === 'P' || me?.role === 'O' || me?.role === 'T') && action_helpers(item?.id)}
+                        onClick={() => (me?.role === 'B' || me?.role === 'P' ||  me?.role === 'T') && action_helpers(item?.id)}
 
                         className={"w-4 h-4 cursor-pointer hover:text-blue-400"}/>}
 
@@ -94,7 +94,7 @@ const Card = ({
                 </p>
                 <hr className={"w-full mt-2"}/>
                 <div className={"flex flex-row justify-between w-full"}>
-                    <p onClick={() => me?.permissions === "EDITOR" && (me?.role === 'B' || me?.role === 'P' || me?.role === 'O' || me?.role === 'T') && action_update_order(item)}
+                    <p onClick={() => (me?.role === 'B' || me?.role === 'P' ||  me?.role === 'T') && action_update_order(item)}
                        className={"text-xs  text-center text-normal text-black cursor-pointer flex items-center gap-1"}>{item?.code_ot}
                         {item?.status && <><span><ClockIcon className={"w-4 h-4 text-gray-400 "}/></span><span
                             className={"text-xs font-extralight"}> {item?.time} </span></>}

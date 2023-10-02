@@ -33,7 +33,7 @@ class DeleteUserView(APIView):
             return Response({'error': 'Error deleting user'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class UpdateUserView(APIView):
     def patch(self, request, *args, **kwargs):
 
@@ -77,7 +77,7 @@ class ListThirdPartiesView(APIView):
             return Response({'error': 'Not found third parties'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class AddThirdPartiesView(APIView):
     def post(self, request):
         try:
@@ -89,7 +89,7 @@ class AddThirdPartiesView(APIView):
             return Response({'error': 'Error adding third parties'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class UpdateThirdPartiesView(APIView):
     def patch(self, request, pk):
         try:
@@ -102,7 +102,7 @@ class UpdateThirdPartiesView(APIView):
             return Response({'error': 'Error updating third parties'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class DeleteThirdPartiesView(APIView):
     def delete(self, request, pk):
         try:

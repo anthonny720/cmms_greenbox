@@ -20,6 +20,7 @@ class UserCreateSerializer(UserCreateSerializer):
             'get_full_name',
             'get_short_name',
             'get_category_name',
+            'get_role_name',
             'is_active',
             'get_admin',
             'password',
@@ -28,7 +29,6 @@ class UserCreateSerializer(UserCreateSerializer):
             'dni',
             'category',
             'get_signature',
-            'permissions',
             'role',)
 
 

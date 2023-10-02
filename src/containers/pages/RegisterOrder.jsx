@@ -13,6 +13,7 @@ import FormSupervisor from "../../components/workOrder/FormSupervisor";
 import Header from "../../components/navigation/Header";
 import DownloadOT from "../../components/workOrder/DownloadOT";
 import {ArrowDownTrayIcon} from "@heroicons/react/24/outline";
+import HeaderForm from "../../components/util/HeaderForm";
 
 
 const RegisterOrder = () => {
@@ -32,10 +33,10 @@ const RegisterOrder = () => {
     const [filterParams, setFilterParams] = useState({
         'date_start': params ? new Date(params?.[0]).toLocaleDateString('es-PE', {timeZone: 'UTC'}) : '',
         'date_end': params ? new Date(params?.[1]).toLocaleDateString('es-PE', {timeZone: 'UTC'}) : '',
-        'physical': filt.physical,
-        'type': filt.type,
-        'user': filt.user,
-        'planned': filt.planned
+        'physical': filt?.physical,
+        'type': filt?.type,
+        'user': filt?.user,
+        'planned': filt?.planned
     });
 
     /*Modal*/
@@ -54,7 +55,9 @@ const RegisterOrder = () => {
 
     const handleViewTask = (data) => {
         setIsOpen(true)
-        setContent(<div className={"h-full md:h-screen"}><DocumentViewer data={data}/></div>)
+        setContent(<div className={"h-full md:h-screen"}>
+            <HeaderForm close={openModal}/>
+            <DocumentViewer data={data}/></div>)
     }
     const handleDownloadTask = () => {
         setIsOpen(true)
@@ -67,10 +70,10 @@ const RegisterOrder = () => {
         const data = {
             'date_start': params ? new Date(params?.[0]).toLocaleDateString('es-PE', {timeZone: 'UTC'}) : '',
             'date_end': params ? new Date(params?.[1]).toLocaleDateString('es-PE', {timeZone: 'UTC'}) : '',
-            'physical': filt.physical,
-            'type': filt.type,
-            'user': filt.user,
-            'planned': filt.planned
+            'physical': filt?.physical,
+            'type': filt?.type,
+            'user': filt?.user,
+            'planned': filt?.planned
         }
         setFilterParams(data)
         dispatch(get_works(data))
@@ -92,7 +95,7 @@ const RegisterOrder = () => {
 
                     <div>
                         <select onChange={(value) => setFilter({...filt, 'physical': value.target.value})}
-                                value={filt.physical}
+                                value={filt?.physical}
                                 className={`z-[100] rounded-2xl bg-white w-full text-gray-400 text-xs p-1 mb-2  flex flex-col border-2 border-blue-400`}
                         >
                             <option value={''}>{"Equipo"}</option>
@@ -103,7 +106,7 @@ const RegisterOrder = () => {
                     </div>
                     <div>
                         <select onChange={(value) => setFilter({...filt, 'type': value.target.value})}
-                                value={filt.type}
+                                value={filt?.type}
                                 className={`z-[100] rounded-2xl bg-white w-full text-gray-400 text-xs p-1 mb-2  flex flex-col border-2 border-blue-400`}
                         >
                             <option value={''}>{"Tipo de mantenimiento"}</option>
@@ -114,18 +117,18 @@ const RegisterOrder = () => {
                     </div>
                     <div>
                         <select onChange={(value) => setFilter({...filt, 'user': value.target.value})}
-                                value={filt.user}
+                                value={filt?.user}
                                 className={`z-[100] rounded-2xl bg-white w-full text-gray-400 text-xs p-1 mb-2  flex flex-col border-2 border-blue-400`}
                         >
                             <option value={''}>{"Técnico/Operario"}</option>
-                            {map(users.filter((user) => (user?.role === 'T' || user?.role === 'O')), (item, index) => {
+                            {map(users.filter((user) => (user?.role === 'T')), (item, index) => {
                                 return <option key={index} value={item?.id}>{item?.first_name}</option>
                             })}
                         </select>
                     </div>
                     <div className="flex items-center mb-4 justify-center gap-2 mt-2 w-max">
                         <label className="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" checked={filt.planned} onChange={
+                            <input type="checkbox" checked={filt?.planned} onChange={
                                 (e) => {
                                     setFilter({...filt, 'planned': e.target.checked})
                                 }

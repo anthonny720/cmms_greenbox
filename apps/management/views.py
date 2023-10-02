@@ -3,17 +3,16 @@ from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from django.utils import timezone
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.management.models import WorkOrder, WorkRequest, ResourceItem, HelperItem
-from apps.management.serializers import WorkOrderSerializer, WorkRequestSerializer
+from apps.management.models import WorkOrder, ResourceItem, HelperItem
+from apps.management.serializers import WorkOrderSerializer
 from apps.store.models import Article
-from apps.util.permissions import BossEditorPermission, PlannerEditorPermission, TechnicalEditorPermission, \
-    OperatorEditorPermission, SupervisorEditorPermission
+from apps.util.permissions import PlannerEditorPermission, TechnicalEditorPermission, SupervisorEditorPermission, \
+    BossEditorPermission
 
 User = get_user_model()
 
@@ -23,10 +22,7 @@ User = get_user_model()
 class WorkOrderListView(APIView):
     def get(self, request):
         try:
-            user = request.user
             queryset = WorkOrder.objects.all().order_by('-date_start')
-            if user.role == "T" or user.role == "O":
-                queryset = queryset.filter(technical=user.id)
             date_start = request.query_params.get('date_start', None)
             date_end = request.query_params.get('date_end', None)
             planned = request.query_params.get('planned', None)
@@ -48,23 +44,21 @@ class WorkOrderListView(APIView):
             if date_start and date_end:
                 queryset = queryset.filter(date_start__range=[datetime.strptime(date_start, "%d/%m/%Y"),
                                                               datetime.strptime(date_end, "%d/%m/%Y")])
-
             else:
-                queryset = queryset.filter(date_start__month=datetime.now().month)
+                queryset = queryset.order_by('-date_start')[:50]
             serializer = WorkOrderSerializer(queryset, many=True)
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Not work orders found'},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'Not work orders found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes(
-    [BossEditorPermission | PlannerEditorPermission | TechnicalEditorPermission | OperatorEditorPermission])
+@permission_classes([PlannerEditorPermission | TechnicalEditorPermission | BossEditorPermission])
 class AddWorkOrderView(APIView):
     def post(self, request):
         try:
-            technical = ''
-            if request.user.role == 'B' or request.user.role == 'P':
+            if request.user.role == 'P':
+                technical = request.data['technical']
+            elif request.user.role == 'B':
                 technical = request.data['technical']
             else:
                 technical = request.user.id
@@ -77,15 +71,14 @@ class AddWorkOrderView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@permission_classes(
-    [BossEditorPermission | PlannerEditorPermission | TechnicalEditorPermission | OperatorEditorPermission])
+@permission_classes([PlannerEditorPermission | TechnicalEditorPermission | BossEditorPermission])
 class UpdateWorkOrderView(APIView):
     def patch(self, request, pk):
         try:
 
             queryset = WorkOrder.objects.get(pk=pk)
 
-            if request.user.role != "P" and request.user.role != "B" and request.user not in queryset.technical.all():
+            if request.user.role != "P"  and request.user not in queryset.technical.all():
                 return Response({'error': 'No tiene permisos para realizar esta acción'},
                                 status=status.HTTP_401_UNAUTHORIZED)
             # if (timezone.now() - queryset.date_start).total_seconds() > 24 * 60 * 60:
@@ -114,12 +107,10 @@ class UpdateWorkSupervisorView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes(
-    [BossEditorPermission | PlannerEditorPermission | TechnicalEditorPermission | OperatorEditorPermission])
+@permission_classes([PlannerEditorPermission | TechnicalEditorPermission | BossEditorPermission])
 class DeleteWorkOrderView(APIView):
     def delete(self, request, pk):
         try:
-
             queryset = WorkOrder.objects.get(pk=pk)
             queryset.delete()
             return Response({'data': 'Work order deleted'}, status=status.HTTP_200_OK)
@@ -127,46 +118,7 @@ class DeleteWorkOrderView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class ListWorkRequestView(APIView):
-    def get(self, request):
-        try:
-            queryset = WorkRequest.objects.all()
-            serializer = WorkRequestSerializer(queryset, many=True)
-            return Response({'data': serializer.data}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'error': 'Not work requests found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-@permission_classes([SupervisorEditorPermission])
-class AddWorkRequestView(APIView):
-    def post(self, request):
-        try:
-            data = request.data
-            data['user'] = request.user.id
-            serializer = WorkRequestSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)  # Validar el serializador
-            serializer.save()
-            return Response({'message': 'Work request added'}, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-@permission_classes([BossEditorPermission | PlannerEditorPermission])
-class GenerateOTView(APIView):
-    def post(self, request):
-        try:
-            serializer = WorkOrderSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            request = WorkRequest.objects.get(pk=request.data['work_request'])
-            request.work_order = WorkOrder.objects.get(pk=serializer.data['id'])
-            request.save()
-            return Response({'message': 'Work order added'}, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-@permission_classes([TechnicalEditorPermission | OperatorEditorPermission])
+@permission_classes([TechnicalEditorPermission])
 class AddResourcesOTView(APIView):
     def post(self, request, pk):
         try:
@@ -175,10 +127,10 @@ class AddResourcesOTView(APIView):
             if request.user.id != order.technical.id:
                 return Response({'error': 'No tiene permisos para realizar esta acción'},
                                 status=status.HTTP_401_UNAUTHORIZED)
-            if (timezone.now() - order.date_start).total_seconds() > 24 * 60 * 60:
-                return Response(
-                    {'error': 'No se puede modificar una orden de trabajo después de 24 horas de su inicio'},
-                    status=status.HTTP_401_UNAUTHORIZED)
+            # if (timezone.now() - order.date_start).total_seconds() > 24 * 60 * 60:
+            #     return Response(
+            #         {'error': 'No se puede modificar una orden de trabajo después de 24 horas de su inicio'},
+            #         status=status.HTTP_401_UNAUTHORIZED)
             article = get_object_or_404(Article, pk=request.data['article'])
             resource = ResourceItem.objects.filter(work_order=order, article=article)
             if resource.exists():
@@ -192,7 +144,7 @@ class AddResourcesOTView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([TechnicalEditorPermission | OperatorEditorPermission])
+@permission_classes([TechnicalEditorPermission])
 class DeleteResourceOTView(APIView):
     def delete(self, request, pk):
         try:
@@ -200,17 +152,17 @@ class DeleteResourceOTView(APIView):
             if request.user.id != queryset.work_order.technical.id:
                 return Response({'error': 'No tiene permisos para realizar esta acción'},
                                 status=status.HTTP_401_UNAUTHORIZED)
-            if (timezone.now() - queryset.work_order.date_start).total_seconds() > 24 * 60 * 60:
-                return Response(
-                    {'error': 'No se puede modificar una orden de trabajo después de 24 horas de su inicio'},
-                    status=status.HTTP_401_UNAUTHORIZED)
+            # if (timezone.now() - queryset.work_order.date_start).total_seconds() > 24 * 60 * 60:
+            #     return Response(
+            #         {'error': 'No se puede modificar una orden de trabajo después de 24 horas de su inicio'},
+            #         status=status.HTTP_401_UNAUTHORIZED)
             queryset.delete()
             return Response({'message': 'Resource deleted'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([TechnicalEditorPermission | OperatorEditorPermission])
+@permission_classes([TechnicalEditorPermission])
 class AddHelpersOTView(APIView):
     def post(self, request, pk):
         try:
@@ -218,10 +170,10 @@ class AddHelpersOTView(APIView):
             if request.user.id != order.technical.id:
                 return Response({'error': 'No tiene permisos para realizar esta acción'},
                                 status=status.HTTP_401_UNAUTHORIZED)
-            if (timezone.now() - order.date_start).total_seconds() > 24 * 60 * 60:
-                return Response(
-                    {'error': 'No se puede modificar una orden de trabajo después de 24 horas de su inicio'},
-                    status=status.HTTP_401_UNAUTHORIZED)
+            # if (timezone.now() - order.date_start).total_seconds() > 24 * 60 * 60:
+            #     return Response(
+            #         {'error': 'No se puede modificar una orden de trabajo después de 24 horas de su inicio'},
+            #         status=status.HTTP_401_UNAUTHORIZED)
             helper = get_object_or_404(User, pk=request.data['helper'])
             date_start = request.data['date_start']
             date_finish = request.data['date_finish']
@@ -231,7 +183,7 @@ class AddHelpersOTView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([TechnicalEditorPermission | OperatorEditorPermission])
+@permission_classes([TechnicalEditorPermission])
 class DeleteHelperOTView(APIView):
     def delete(self, request, pk):
         try:
@@ -239,10 +191,10 @@ class DeleteHelperOTView(APIView):
             if request.user.id != queryset.work_order.technical.id:
                 return Response({'error': 'No tiene permisos para realizar esta acción'},
                                 status=status.HTTP_401_UNAUTHORIZED)
-            if (timezone.now() - queryset.work_order.date_start).total_seconds() > 24 * 60 * 60:
-                return Response(
-                    {'error': 'No se puede modificar una orden de trabajo después de 24 horas de su inicio'},
-                    status=status.HTTP_401_UNAUTHORIZED)
+            # if (timezone.now() - queryset.work_order.date_start).total_seconds() > 24 * 60 * 60:
+            #     return Response(
+            #         {'error': 'No se puede modificar una orden de trabajo después de 24 horas de su inicio'},
+            #         status=status.HTTP_401_UNAUTHORIZED)
             queryset.delete()
             return Response({'message': 'Helper deleted'}, status=status.HTTP_200_OK)
         except Exception as e:

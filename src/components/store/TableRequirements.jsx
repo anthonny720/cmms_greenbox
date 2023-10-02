@@ -23,7 +23,7 @@ const TableRequirements = ({data, remove, update}) => {
             className="bg-white border-b hover:bg-[#4687f1] hover:bg-opacity-10"
         >
             <td className="py-2 px-4 text-center text-xs font-light ">
-                {me?.permissions === 'EDITOR' && (me?.role === 'P' || me?.role === 'B') ? (
+                { (me?.role === 'P' || me?.role === 'B') ? (
                     <TrashIcon onClick={() => remove(item)}
                                className="w-5 p-0.5 text-red-400 cursor-pointer bg-red-500 bg-opacity-10 rounded-full"/>) : (
                     <button
@@ -43,7 +43,7 @@ const TableRequirements = ({data, remove, update}) => {
                 year: 'numeric', month: 'numeric', day: 'numeric', timeZone: 'UTC'
             })}</td>
             <td className="py-2 px-4 text-center text-xs font-light hover:text-blue-400 hover:font-bold cursor-pointer capitalize"
-                onClick={() => me?.permissions === "EDITOR" && (me?.role === "P" || me?.role === "S" || me?.role === 'B') && update(item)}>
+                onClick={() =>(me?.role === "P" || me?.role === "S" || me?.role === 'B') && update(item)}>
                 {item?.product}
             </td>
             <td className="py-2 px-4 text-center text-xs font-light capitalize">

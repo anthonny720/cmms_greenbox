@@ -169,7 +169,7 @@ const FormEquipments = ({data, close}) => {
                                 <DocumentTextIcon onClick={() => handleOpenModalViewer(item?.url)}
                                                   title={item?.url.split('/')[3]}
                                                   className={"w-12 text-gray-400  cursor-pointer"}/>
-                                {me?.permissions === 'EDITOR' && (me?.role === 'P' || me?.role === 'J') ? (
+                                {(me?.role === 'P' || me?.role === 'B') ? (
                                     <TrashIcon onClick={() => handleDeleteFile(item)}
                                                className="invisible sm:visible absolute w-4 text-red-400 bg-red-700 left-0 bg-opacity-10 cursor-pointer rounded-full p-0.5"/>) : (
                                     <button

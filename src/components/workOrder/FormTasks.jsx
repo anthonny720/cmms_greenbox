@@ -69,7 +69,7 @@ const FormTasks = ({data, close, id, params}) => {
         <HeaderForm close={close} submit={formik.handleSubmit}/>
 
         <div className={`grid grid-cols-1 gap-2`}>
-            {me && me.permissions === 'EDITOR' && (me.role === 'P' || me.role === 'B') && <div className={"w-full "}>
+            {me && (me.role === 'P' || me.role === 'B') && <div className={"w-full "}>
                 <p className={`${formik.errors.technical && "text-red-500"} text-[10px]  font-extralight leading-none text-blue-400 `}>Responsable:</p>
                 <select value={formik.values.technical}
                         onChange={(value) => formik.setFieldValue('technical', value.target.value)}
@@ -203,7 +203,7 @@ const FormTasks = ({data, close, id, params}) => {
             </div>
 
             <div className={"grid grid-cols-3"}>
-                {me && me?.permissions === "EDITOR" && (me?.role === 'B' || me?.role === 'P') && (/*Planned*/
+                {me && (me?.role === 'B' || me?.role === 'P' || me?.role === 'T') && (/*Planned*/
                     <div>
                         <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>Planificado</p>
                         <Switch checked={formik.values.planned} onChange={text => formik.setFieldValue('planned', text)}
@@ -222,9 +222,28 @@ const FormTasks = ({data, close, id, params}) => {
                         <p className={` text-[10px] mt-1  font-extralight leading-none ${formik.errors.planned ? "text-red-400" : " text-gray-800"}`}>{formik.errors.planned}</p>
 
                     </div>)}
+                {me && (me?.role === 'B' || me?.role === 'P' || me?.role === 'T') && (/*Planned*/
+                    <div>
+                        <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>Parada de planta</p>
+                        <Switch checked={formik.values.stop} onChange={text => formik.setFieldValue('stop', text)}
+                                as={Fragment}>
+                            {({checked}) => (/* Use the `checked` state to conditionally style the button. */
+                                <button
+                                    className={`${checked ? 'bg-blue-600' : 'bg-gray-200'} mt-2 relative inline-flex h-6 w-11 items-center rounded-full`}
+                                >
+                                    <span className="sr-only">Parada de planta</span>
+                                    <span
+                                        className={`${checked ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                                    />
+                                </button>)}
+                        </Switch>
+
+                        <p className={` text-[10px] mt-1  font-extralight leading-none ${formik.errors.stop ? "text-red-400" : " text-gray-800"}`}>{formik.errors.stop}</p>
+
+                    </div>)}
 
                 {/*Status*/}
-                <div>
+                {me && (me?.role === 'B' || me?.role === 'P' || me?.role === 'T') && (<div>
                     <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>Finalizado</p>
                     <Switch checked={formik.values.status} onChange={text => formik.setFieldValue('status', text)}
                             as={Fragment}>
@@ -241,7 +260,7 @@ const FormTasks = ({data, close, id, params}) => {
 
                     <p className={` text-[10px] mt-1  font-extralight leading-none ${formik.errors.status ? "text-red-400" : " text-gray-800"}`}>{formik.errors.status}</p>
 
-                </div>
+                </div>)}
 
             </div>
 
@@ -260,6 +279,7 @@ const initialValues = (data) => {
         activities: data?.activities || '',
         status: data?.status || false,
         planned: data?.planned || false,
+        stop: data?.stop || false,
         technical: data?.technical || null,
 
 

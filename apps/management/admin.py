@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from apps.management.models import WorkOrder, WorkRequest, ResourceItem
+from apps.management.models import WorkOrder, ResourceItem
 
 
 # Register your models here.
@@ -16,14 +16,6 @@ class WorkOrderAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     list_per_page = 25
 
 
-@admin.register(WorkRequest)
-class WorkRequestAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('date_report', 'asset', 'description', 'user', 'work_order')
-    list_filter = ('user', 'asset',)
-    date_hierarchy = 'date_report'
-    search_fields = ('description',)
-    ordering = ['-date_report']
-    list_per_page = 25
 
 
 @admin.register(ResourceItem)

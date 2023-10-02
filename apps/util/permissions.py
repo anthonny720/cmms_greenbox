@@ -13,20 +13,7 @@ class TechnicalEditorPermission(BasePermission):
         if request.method in SAFE_METHODS:
             return request.user.is_authenticated
         else:
-            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.TECHNICAL and request.user.permissions == UserAccount.PermissionsChoices.EDITOR
-
-    def handle_no_permission(self, request):
-        return Response({'error': self.message}, status=status.HTTP_403_FORBIDDEN)
-
-
-class OperatorEditorPermission(BasePermission):
-    message = "No tiene permisos para realizar esta acción"
-
-    def has_permission(self, request, view):
-        if request.method in SAFE_METHODS:
-            return request.user.is_authenticated
-        else:
-            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.OPERATOR and request.user.permissions == UserAccount.PermissionsChoices.EDITOR
+            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.TECHNICAL
 
     def handle_no_permission(self, request):
         return Response({'error': self.message}, status=status.HTTP_403_FORBIDDEN)
@@ -39,7 +26,7 @@ class SupervisorEditorPermission(BasePermission):
         if request.method in SAFE_METHODS:
             return request.user.is_authenticated
         else:
-            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.SUPERVISOR and request.user.permissions == UserAccount.PermissionsChoices.EDITOR
+            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.SUPERVISOR
 
     def handle_no_permission(self, request):
         return Response({'error': self.message}, status=status.HTTP_403_FORBIDDEN)
@@ -52,7 +39,7 @@ class ShoppingEditorPermission(BasePermission):
         if request.method in SAFE_METHODS:
             return request.user.is_authenticated
         else:
-            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.SHOPPING and request.user.permissions == UserAccount.PermissionsChoices.EDITOR
+            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.SHOPPING
 
     def handle_no_permission(self, request):
         return Response({'error': self.message}, status=status.HTTP_403_FORBIDDEN)
@@ -65,11 +52,10 @@ class PlannerEditorPermission(BasePermission):
         if request.method in SAFE_METHODS:
             return request.user.is_authenticated
         else:
-            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.PLANNER and request.user.permissions == UserAccount.PermissionsChoices.EDITOR
+            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.PLANNER
 
     def handle_no_permission(self, request):
         return Response({'error': self.message}, status=status.HTTP_403_FORBIDDEN)
-
 
 class BossEditorPermission(BasePermission):
     message = "No tiene permisos para realizar esta acción"
@@ -78,7 +64,7 @@ class BossEditorPermission(BasePermission):
         if request.method in SAFE_METHODS:
             return request.user.is_authenticated
         else:
-            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.BOSS and request.user.permissions == UserAccount.PermissionsChoices.EDITOR
+            return request.user.is_authenticated and request.user.role == UserAccount.RolesChoices.BOSS
 
     def handle_no_permission(self, request):
         return Response({'error': self.message}, status=status.HTTP_403_FORBIDDEN)

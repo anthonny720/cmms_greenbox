@@ -167,64 +167,63 @@ const Config = () => {
                     </select>
                 </div>
                 {category === "1" ? <div className={"relative"}>
-                        <Tab.Group>
-                            <Tab.List className="flex space-x-1 bg-white p-1 w-full">
-                                {map(categories, category => (<Tab
-                                    key={category}
-                                    data-mdb-ripple="true"
-                                    data-mdb-ripple-color="light"
-                                    onClick={(selected) => {
-                                        setSelect([category])
-                                    }}
-                                    className={({selected}) => classNames('w-full  py-2.5 text-xs  font-light leading-5 ', selected ? 'transition ease-in-out  border-b-2  border-[#4687f1] text-[#4687f1] hover:bg-[#4687f1] hover:bg-opacity-10 hover:text-[#4687f1]  duration-300 ' : 'text-gray-400    hover:bg-white/[0.12] hover:text-gray-600')}
-                                >
-                                    {category}
-                                </Tab>))}
-                            </Tab.List>
-                            <Tab.Panels className="mt-2">
-                                <Tab.Panel
-                                >
-                                    <Table data={failures} columns={columns_source} update={handleUpdateOrigin}
-                                           remove={handleDeleteOrigin}/>
-                                </Tab.Panel>
+                    <Tab.Group>
+                        <Tab.List className="flex space-x-1 bg-white p-1 w-full">
+                            {map(categories, category => (<Tab
+                                key={category}
+                                data-mdb-ripple="true"
+                                data-mdb-ripple-color="light"
+                                onClick={(selected) => {
+                                    setSelect([category])
+                                }}
+                                className={({selected}) => classNames('w-full  py-2.5 text-xs  font-light leading-5 ', selected ? 'transition ease-in-out  border-b-2  border-[#4687f1] text-[#4687f1] hover:bg-[#4687f1] hover:bg-opacity-10 hover:text-[#4687f1]  duration-300 ' : 'text-gray-400    hover:bg-white/[0.12] hover:text-gray-600')}
+                            >
+                                {category}
+                            </Tab>))}
+                        </Tab.List>
+                        <Tab.Panels className="mt-2">
+                            <Tab.Panel
+                            >
+                                <Table data={failures} columns={columns_source} update={handleUpdateOrigin}
+                                       remove={handleDeleteOrigin}/>
+                            </Tab.Panel>
 
-                                <Tab.Panel
+                            <Tab.Panel
 
-                                >
-                                    <Table data={types} columns={columns_source} update={handleUpdateType}
-                                           remove={handleDeleteType}/>
-                                </Tab.Panel>
-                            </Tab.Panels>
-                        </Tab.Group>
+                            >
+                                <Table data={types} columns={columns_source} update={handleUpdateType}
+                                       remove={handleDeleteType}/>
+                            </Tab.Panel>
+                        </Tab.Panels>
+                    </Tab.Group>
 
-                    </div> :
-                    <div className={" relative"}>
-                        <Tab.Group>
-                            <Tab.List className="flex space-x-1 bg-white p-1 text-gray-400">
-                                <Tab
+                </div> : <div className={" relative"}>
+                    <Tab.Group>
+                        <Tab.List className="flex space-x-1 bg-white p-1 text-gray-400">
+                            <Tab
 
-                                    data-mdb-ripple="true"
-                                    data-mdb-ripple-color="light"
-                                    onClick={(selected) => {
-                                        setSelect(['Categoría personal'])
-                                    }}
-                                    className={({selected}) => classNames('w-full  py-2.5 text-xs  font-light leading-5 text-black', selected ? 'transition ease-in-out  border-b-2  border-[#4687f1] text-[#4687f1] hover:bg-[#4687f1] hover:bg-opacity-10 hover:text-[#4687f1]  duration-300 ' : 'text-gray-400    hover:bg-white/[0.12] hover:text-gray-600')}
-                                >
-                                    Categoría personal
-                                </Tab>
-                            </Tab.List>
-                            <Tab.Panels className="mt-2">
-                                <Tab.Panel
-                                >
-                                    <TableCategory data={categories_data} columns={columns_category}
-                                                   remove={handleDeleteCategory}
-                                                   update={handleUpdateCategory}/>
-                                </Tab.Panel>
+                                data-mdb-ripple="true"
+                                data-mdb-ripple-color="light"
+                                onClick={(selected) => {
+                                    setSelect(['Categoría personal'])
+                                }}
+                                className={({selected}) => classNames('w-full  py-2.5 text-xs  font-light leading-5 text-black', selected ? 'transition ease-in-out  border-b-2  border-[#4687f1] text-[#4687f1] hover:bg-[#4687f1] hover:bg-opacity-10 hover:text-[#4687f1]  duration-300 ' : 'text-gray-400    hover:bg-white/[0.12] hover:text-gray-600')}
+                            >
+                                Categoría personal
+                            </Tab>
+                        </Tab.List>
+                        <Tab.Panels className="mt-2">
+                            <Tab.Panel
+                            >
+                                <TableCategory data={categories_data} columns={columns_category}
+                                               remove={handleDeleteCategory}
+                                               update={handleUpdateCategory}/>
+                            </Tab.Panel>
 
-                            </Tab.Panels>
-                        </Tab.Group>
+                        </Tab.Panels>
+                    </Tab.Group>
 
-                    </div>}
+                </div>}
 
             </form>
         </div>

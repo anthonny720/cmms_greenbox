@@ -37,7 +37,7 @@ const FormRequirements = ({data, close}) => {
             <HeaderForm submit={formik.handleSubmit} close={close}/>
 
             <div className={`grid md:grid-cols-2 grid-cols-1 gap-2 mt-2`}>
-                {me && me.permissions === 'EDITOR' && (me?.role === "B" || me?.role === "P" || me?.role === 'T' || me?.role === 'O') && map(columns, (item, index) => (
+                {me && (me?.role === "B" || me?.role === "P" || me?.role === 'T' ) && map(columns, (item, index) => (
                     <div key={index}>
                         {formik.values[item.name].length > 0 &&
                             <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>{item.title}</p>}
@@ -50,7 +50,7 @@ const FormRequirements = ({data, close}) => {
 
                     </div>))}
 
-                {me && me.permissions === 'EDITOR' && (me?.role === "S" || me?.role === "P" || me?.role === 'C' || me?.role === 'B') &&
+                {me  && (me?.role === "S" || me?.role === "P" || me?.role === 'C' || me?.role === 'B') &&
                     <div>
                         <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>Estado</p>
                         <select onChange={(value) => formik.setFieldValue('status', value.target.value)}

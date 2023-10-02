@@ -14,7 +14,6 @@ import Tools from "./components/Assets/Tools";
 import Equipments from "./components/Assets/Equipments";
 import Facilities from "./components/Assets/Facilities";
 import WorkOrder from "./containers/pages/WorkOrder";
-import WorkRequest from "./containers/pages/WorkRequest";
 import BusinessIntelligence from "./containers/pages/BusinessIntelligence";
 import Config from "./containers/pages/Config";
 import Store from "./containers/pages/Store";
@@ -48,10 +47,9 @@ const App = () => {
                     <Route exact path="/storage/panel" element={<Storage/>}/>
 
                     <Route exact path="/tasks" element={<WorkOrder/>}/>
-                    <Route exact path="/workrequest" element={<WorkRequest/>}/>
                     <Route exact path="/register" element={<RegisterOrder/>}/>
 
-                    <Route exact path="/graphics" element={<BusinessIntelligence/>}/>
+                    <Route exact path="/" element={<BusinessIntelligence/>}/>
 
 
                     {/*Authentication*/}

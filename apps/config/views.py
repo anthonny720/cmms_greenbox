@@ -7,7 +7,7 @@ from apps.config.models import Failure, Type
 from apps.config.serializers import FailureSerializer, TypeSerializer
 from apps.users.models import UserCategory
 from apps.users.serializers import UserCategorySerializer
-from apps.util.permissions import BossEditorPermission, PlannerEditorPermission, IsAdmin
+from apps.util.permissions import PlannerEditorPermission, IsAdmin, BossEditorPermission
 
 
 # Create your views here.
@@ -32,7 +32,7 @@ class ListTypeView(APIView):
             return Response({'error': 'No types found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class AddFailureView(APIView):
     def post(self, request):
 
@@ -45,7 +45,7 @@ class AddFailureView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class AddTypeView(APIView):
     def post(self, request):
         try:
@@ -57,7 +57,7 @@ class AddTypeView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class UpdateFailureView(APIView):
     def patch(self, request, pk):
         try:
@@ -70,7 +70,7 @@ class UpdateFailureView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class UpdateTypeView(APIView):
     def patch(self, request, pk):
         try:
@@ -83,7 +83,7 @@ class UpdateTypeView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class DeleteFailureView(APIView):
     def delete(self, request, pk):
         try:
@@ -94,7 +94,7 @@ class DeleteFailureView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class DeleteTypeView(APIView):
     def delete(self, request, pk):
         try:
@@ -115,7 +115,7 @@ class ListCategoryView(APIView):
             return Response({'error': 'No categories found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class AddCategoryView(APIView):
     def post(self, request):
         try:
@@ -127,7 +127,7 @@ class AddCategoryView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class UpdateCategoryView(APIView):
     def patch(self, request, pk):
         try:
@@ -139,7 +139,8 @@ class UpdateCategoryView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@permission_classes([BossEditorPermission | PlannerEditorPermission | IsAdmin])
+
+@permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
 class DeleteCategoryView(APIView):
     def delete(self, request, pk):
         try:

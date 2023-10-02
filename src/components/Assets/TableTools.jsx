@@ -22,7 +22,7 @@ const TableTools = ({data, update, columns, remove}) => {
             <tr key={index} className="bg-white border-b hover:bg-[#4687f1] hover:bg-opacity-10">
 
                 <td className="py-2 px-4 text-center text-xs font-light">
-                    {me?.permissions === 'EDITOR' && (me?.role === 'P' || me?.role === 'B') ? (
+                    {(me?.role === 'P' || me?.role === 'B') ? (
                         <TrashIcon onClick={() => remove(item)}
                                    className="w-5 p-0.5 text-red-400 bg-red-500 bg-opacity-10 rounded-full"/>) : (
                         <button
@@ -32,7 +32,7 @@ const TableTools = ({data, update, columns, remove}) => {
                         </button>)}
                 </td>
                 <td className=" py-2 px-4 text-center text-xs font-light  cursor-pointer hover:text-blue-400 hover:font-bold"
-                    onClick={() => me?.permissions === 'EDITOR' && (me?.role === "B" || me?.role === "P") ? update(item) : dispatch(setAlert("No tienes permisos para realizar esta accion", "error"))}>{item?.name}</td>
+                    onClick={() => (me?.role === "B" || me?.role === "P") ? update(item) : dispatch(setAlert("No tienes permisos para realizar esta accion", "error"))}>{item?.name}</td>
                 <td className=" py-2 px-4 text-center text-xs font-light  ">{item?.description}</td>
                 <td className=" py-2 px-4 text-center text-xs font-light  ">{item?.model}</td>
                 <td className=" py-2 px-4 text-center text-xs font-light  ">{item?.maker}</td>

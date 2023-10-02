@@ -25,7 +25,7 @@ export default function Login() {
         }
     })
 
-    if (isAuthenticated) return <Navigate to='/graphics/' replace/>;
+    if (isAuthenticated) return <Navigate to='/' replace/>;
 
     return (<>
         <Helmet>

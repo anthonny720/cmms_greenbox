@@ -45,9 +45,11 @@ class WorkOrder(models.Model):
     observations = models.TextField(verbose_name='Observaciones', blank=True, null=True)
     planned = models.BooleanField(verbose_name='Planificado', default=False)
     validated = models.BooleanField(verbose_name='Validado', default=False)
-    supervisor = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Supervisor', blank=True,
-                                   null=True, related_name='work_orders_supervisor')
+    supervisor = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Supervisor', blank=True, null=True,
+                                   related_name='work_orders_supervisor')
+    stop= models.BooleanField(verbose_name='Parada', default=False)
     created = models.DateTimeField(auto_now_add=True)
+
     history = HistoricalRecords()
 
     updated_at = models.DateTimeField(auto_now=True)
@@ -57,10 +59,8 @@ class WorkOrder(models.Model):
 
     @property
     def code(self):
-        data = WorkOrder._base_manager.filter(
-            created__year=self.date_report.year,
-            created__lt=self.date_report
-        ).count() + 1
+        data = WorkOrder._base_manager.filter(created__year=self.date_report.year,
+            created__lt=self.date_report).count() + 1
         return "OT" + "-" + str(self.date_report.year)[2:] + str(self.date_report.month).zfill(2) + str(data)
 
     def get_time(self):
@@ -150,8 +150,7 @@ class HelperItem(models.Model):
 
     work_order = models.ForeignKey(WorkOrder, on_delete=models.PROTECT, verbose_name='Orden de trabajo',
                                    related_name='helpers_order')
-    helper = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ayudante',
-                               related_name='helpers_helper')
+    helper = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ayudante', related_name='helpers_helper')
     date_start = models.DateTimeField(verbose_name='Fecha de inicio')
     date_finish = models.DateTimeField(verbose_name='Fecha de finalización')
     history = HistoricalRecords()
@@ -188,20 +187,3 @@ class ResourceItem(models.Model):
         self.price = self.article.value * self.quantity
         self.name = self.article.description
         super().save(force_insert, force_update, using, update_fields)
-
-
-class WorkRequest(models.Model):
-    date_report = models.DateTimeField(verbose_name='Fecha de reporte', default=timezone.now)
-    asset = models.ForeignKey(Physical, on_delete=models.PROTECT, verbose_name='Activo', blank=True, null=True)
-    description = models.TextField(verbose_name='Descripción', blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Usuario')
-    work_order = models.OneToOneField(WorkOrder, on_delete=models.PROTECT, verbose_name='Orden de trabajo', blank=True,
-                                      null=True)
-
-    def __str__(self):
-        return str(self.date_report)
-
-    class Meta:
-        verbose_name = 'Solicitud de trabajo'
-        verbose_name_plural = 'Solicitudes de trabajo'
-        ordering = ['-date_report']

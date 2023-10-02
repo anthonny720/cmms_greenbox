@@ -46,19 +46,14 @@ class UserAccountManager(BaseUserManager):
         user.is_superuser = True
         user.is_staff = True
         user.save()
-        user.role = 'O'
+        user.role = 'T'
 
         return user
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
-    class PermissionsChoices(models.TextChoices):
-        EDITOR = 'EDITOR', 'Editor'
-        VIEWER = 'VIEWER', 'Visualizador'
-
     class RolesChoices(models.TextChoices):
         TECHNICAL = 'T', 'Técnico'
-        OPERATOR = 'O', 'Operador'
         SUPERVISOR = 'S', 'Supervisor'
         SHOPPING = 'C', 'Compras'
         PLANNER = 'P', 'Planner'
@@ -77,8 +72,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True, )
     is_staff = models.BooleanField(default=False)
     role = models.CharField(max_length=2, choices=RolesChoices.choices, default='O', verbose_name='Rol')
-    permissions = models.CharField(max_length=6, choices=PermissionsChoices.choices, default='VIEWER',
-                                   verbose_name='Permisos')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     history = HistoricalRecords()
 
@@ -96,12 +89,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     def get_role_name(self):
         try:
             return self.get_role_display()
-        except:
-            return ''
-
-    def get_permissions_name(self):
-        try:
-            return self.get_permissions_display()
         except:
             return ''
 

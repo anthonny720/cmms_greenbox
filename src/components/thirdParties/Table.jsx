@@ -22,7 +22,7 @@ const Table = ({data, remove, update}) => {
 
             <tr key={index} className="bg-white border-y hover:bg-[#4687f1] hover:bg-opacity-10 ">
                 <td className="py-2 px-4 text-center text-xs font-light">
-                    {me?.permissions === 'EDITOR' && (me?.role === 'P' || me?.role === 'J') ? (
+                    {(me?.role === 'P' || me?.role === 'J') ? (
                         <TrashIcon onClick={() => remove(item)}
                                    className="w-5 p-0.5 text-red-400 bg-red-500 bg-opacity-10 rounded-full"/>) : (
                         <button
@@ -32,7 +32,7 @@ const Table = ({data, remove, update}) => {
                         </button>)}
                 </td>
                 <td className="py-2 px-4 text-center text-xs font-light hover:text-blue-400 hover:font-bold cursor-pointer"
-                    onClick={() => me?.permissions === "EDITOR" && (me?.role === "P" || me?.role === 'J') && update(item)}>{item?.name}</td>
+                    onClick={() =>  (me?.role === "P" || me?.role === 'B') && update(item)}>{item?.name}</td>
                 <td className="py-2 px-4 text-center text-xs font-light ">{item?.ruc}</td>
                 <td className="py-2 px-4 text-center text-xs font-light ">{item?.direction}</td>
                 <td className="py-2 px-4 text-center text-xs font-light ">{item?.phone}</td>

@@ -1,17 +1,11 @@
 from rest_framework import serializers
 
-from apps.management.models import WorkOrder, WorkRequest, ResourceItem, HelperItem
+from apps.management.models import WorkOrder, ResourceItem, HelperItem
 from apps.store.serializers import StoreSerializer
 from apps.users.serializers import HelperSerializer
 
 
-class WorkRequestSerializer(serializers.ModelSerializer):
-    client = serializers.CharField(source='user.first_name', read_only=True)
-    equipment = serializers.CharField(source='asset.name', read_only=True)
 
-    class Meta:
-        model = WorkRequest
-        fields = ('id', 'date_report', 'asset', 'description', 'user', 'work_order', 'client', 'equipment',)
 
 
 class ResourceItemSerializer(serializers.ModelSerializer):

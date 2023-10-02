@@ -5,7 +5,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91045827-1b02-497d-b4c1-a4b3b4d9cf4f" name="Changes" comment="V2">
+      <change beforePath="$PROJECT_DIR$/.idea/cmms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cmms.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/assets/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/assets/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/config/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/config/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/graphics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/graphics/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/management/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/management/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/store/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/store/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/util/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/util/permissions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.5a6e3391.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.5a6e3391.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.934c8b99.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.934c8b99.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.934c8b99.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Assets/FormEquipments.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/FormEquipments.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Assets/TableEquipments.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/TableEquipments.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Assets/TableFixes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/TableFixes.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Assets/TableTools.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/TableTools.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/config/Table.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/config/Table.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/config/TableCategory.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/config/TableCategory.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/navigation/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navigation/Sidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/storage/Table.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/storage/Table.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/store/FormRequirements.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/store/FormRequirements.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/store/TableRequirements.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/store/TableRequirements.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/thirdParties/Table.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/thirdParties/Table.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/util/Table.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/util/Table.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workOrder/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workOrder/Card.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workOrder/FormTasks.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workOrder/FormTasks.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workRequest/FormOT.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workRequest/FormRequest.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workRequest/Table.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/auth/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/auth/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/errors/Error404.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/errors/Error404.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Config.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Config.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/RegisterOrder.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/RegisterOrder.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/WorkRequest.jsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,6 +179,13 @@
       <workItem from="1687795434760" duration="16000" />
       <workItem from="1692218493989" duration="486000" />
       <workItem from="1692639520463" duration="4287000" />
+      <workItem from="1692652198475" duration="385000" />
+      <workItem from="1692722650891" duration="2077000" />
+      <workItem from="1692814174677" duration="60000" />
+      <workItem from="1695327007568" duration="1493000" />
+      <workItem from="1695736827296" duration="597000" />
+      <workItem from="1695820415157" duration="22000" />
+      <workItem from="1696259905356" duration="6515000" />
     </task>
     <task id="LOCAL-00001" summary="Fix deploy">
       <created>1685992901244</created>
@@ -162,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1692646494399</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="V2">
+      <option name="closed" value="true" />
+      <created>1692652373609</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1692652373609</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

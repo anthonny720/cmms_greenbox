@@ -17,9 +17,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['mm.greenbox.pe', 'mm.greenbox.pe', 'greenbox.pe', 'www.greenbox.pe', 'localhost', ]
+ALLOWED_HOSTS = ['localhost', 'mm.greenbox.pe']
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
@@ -64,6 +64,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql', 'NAME': 'greenbox_mm',
                          'USER': 'anthonny', 'PASSWORD': 'lO0sBzg&@7Kayr0H^PeT', 'HOST': 'localhost', 'PORT': 5432, }}
+## databases default db.sqlite3
+# DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), }}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # Password validation

@@ -70,7 +70,7 @@ class GetQuantityOTPersonnel(APIView):
                 queryset = queryset.filter(
                     date_start__range=[datetime.now().date() - timedelta(days=7), datetime.now().date()])
 
-            users = User.objects.filter(Q(role='T') | Q(role='O'), is_active=True)
+            users = User.objects.filter(role='T', is_active=True)
 
             count_total_ot = []
             total_hours = []

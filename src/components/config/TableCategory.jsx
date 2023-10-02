@@ -27,10 +27,10 @@ const TableCategory = ({data, update, columns, remove}) => {
                 <tr key={index} className="bg-white border-b hover:bg-[#4687f1] hover:bg-opacity-10">
                     <td className=" py-2 flex justify-center  text-center text-xs font-light cursor-pointer p-2 ">
                         <TrashIcon
-                            onClick={() => me && me !== undefined && me !== null && me?.permissions === 'EDITOR' && (me?.role === 'P' || me?.role === 'B') ? remove(row) : dispatch(setAlert("No tienes permisos para realizar esta acción", "error"))}
+                            onClick={() => me && me !== undefined && me !== null && (me?.role === 'P' || me?.role === 'B') ? remove(row) : dispatch(setAlert("No tienes permisos para realizar esta acción", "error"))}
                             className={"w-5 p-0.5 text-red-400 bg-red-500 bg-opacity-10 rounded-full"}/></td>
 
-                    <td onClick={() => me && me !== undefined && me !== null && me?.permissions === 'EDITOR' && (me?.role === 'P' || me?.role === 'B') ? update(row) : dispatch(setAlert("No tienes permisos para realizar esta acción", "error"))}
+                    <td onClick={() => me && me !== undefined && me !== null && (me?.role === 'P' || me?.role === 'B') ? update(row) : dispatch(setAlert("No tienes permisos para realizar esta acción", "error"))}
                         className=" py-2 text-center text-xs font-light cursor-pointer hover:text-blue-400 hover:font-bold">{row.name}</td>
                     <td className=" py-2 text-center text-xs font-light cursor-pointer">{row.description}</td>
                     <td className=" py-2 text-center text-xs font-light cursor-pointer">{Humanize.formatNumber(row?.salary, 2)}</td>
